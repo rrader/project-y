@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
-from petitions.serializers import UserSerializerDetail, PetitionSerializerDetail, ImageUploadSerializer, PetitionSignSerializer, TagSerializer
+from petitions.serializers import UserSerializerDetail, PetitionSerializerDetail, ImageUploadSerializer, PetitionSignSerializer, TagSerializer, TagSerializerDetail
 from petitions.models import Petition, PetitionSign, Tag
 import petitions.workflow
 from petitions.workflow import PetitionWorkflowMixin, check_conditions
@@ -31,10 +32,16 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-class TagsList(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin,):
+class TagsViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin,
+                    viewsets.mixins.RetrieveModelMixin):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = ()
+
+    def retrieve(self, request, pk=None):
+        tag = get_object_or_404(self.queryset, pk=pk)
+        serializer = TagSerializerDetail(tag, context={'request': request})
+        return Response(serializer.data)
 
 
 class PetitionViewSet(PetitionWorkflowMixin, viewsets.ModelViewSet):
