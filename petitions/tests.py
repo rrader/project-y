@@ -2,6 +2,7 @@ import json
 import logging
 import unittest
 import sys
+from datetime import timedelta
 from django.contrib.auth import get_user_model
 from petitions.models import Petition, Media, PetitionSign, Tag, PetitionStatusChange
 from rest_framework import status
@@ -19,8 +20,7 @@ logger.addHandler(stream_handler)
 
 PETITION = {
     "title": "Build Death Star in KPI",
-    "text": "We demand to build Death Star in the KPI",
-    "deadline": "2015-09-01T12:00",
+    "text": "We demand to build Death Star in the KPI"
 }
 
 

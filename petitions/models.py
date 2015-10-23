@@ -1,3 +1,5 @@
+from datetime import timedelta
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -32,7 +34,7 @@ class Petition(models.Model):
     title = models.CharField(max_length=100)
     text = models.TextField()
     author = models.ForeignKey(User, related_name='petitions')
-    deadline = models.DateTimeField()
+    deadline = models.DateTimeField(null=True)
     responsible = models.CharField(max_length=50, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag)
@@ -42,6 +44,17 @@ class Petition(models.Model):
 
     def current_status(self):
         return self.status_log.order_by('id').last()
+
+    def get_deadline(self):
+        if self.deadline is None:
+            if self.current_status().status != self.ACTIVE:
+                return
+
+            activated_at = self.status_log.filter(status=Petition.ACTIVE).get().timestamp
+            deadline = activated_at + timedelta(days=settings.DEADLINE_INTERVAL)
+            self.deadline = deadline.replace(microsecond=0, second=0, minute=0, hour=0)
+            self.save()
+        return self.deadline
 
 
 class PetitionStatusChange(models.Model):

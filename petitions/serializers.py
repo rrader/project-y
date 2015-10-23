@@ -48,6 +48,7 @@ class PetitionSerializer(serializers.HyperlinkedModelSerializer):
     status = serializers.ReadOnlyField(source='current_status.status')
     status_log = PetitionStatusChangeSerializer(many=True, read_only=True)
     sign_count = serializers.ReadOnlyField(source='signs.count')
+    deadline = serializers.ReadOnlyField()
     class Meta:
         model = Petition
         fields = ('url', 'title', 'text', 'deadline', 'responsible',

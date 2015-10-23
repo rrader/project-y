@@ -75,20 +75,18 @@ def check_conditions(petition):
     if petition.current_status().status != Petition.ACTIVE:
         return
 
-    activated_at = petition.status_log.filter(status=Petition.ACTIVE).get().timestamp
-    days_active = (now() - activated_at).days
     if petition.signs.count() >= settings.SIGNS_GOAL:
         last_sign = PetitionSign.objects.filter(petition=petition). \
                         order_by('id')[settings.SIGNS_GOAL - 1:settings.SIGNS_GOAL][0]
         reached_goal_at = last_sign.timestamp
-        if (reached_goal_at - activated_at).days <= settings.DEADLINE_INTERVAL:
+        if reached_goal_at <= petition.get_deadline():
             logger.info("Petition {} reached goal in time! move to EXECUTION".format(petition.id))
             PetitionStatusChange.objects.create(
                 status=Petition.EXECUTION,
                 petition=petition
             )
 
-    elif days_active > settings.DEADLINE_INTERVAL:
+    elif now() > petition.get_deadline():
         logger.info("Unfortunately, petition {} didn't reach goal in time, "
                     "mark as INACTIVE".format(petition.id))
         PetitionStatusChange.objects.create(
