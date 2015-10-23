@@ -111,6 +111,23 @@ USE_L10N = True
 USE_TZ = True
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
@@ -177,3 +194,5 @@ ALLOWED_HOSTS = ['*']
 SIGNS_GOAL = 1000
 if DEBUG:
     SIGNS_GOAL = 5
+
+DEADLINE_INTERVAL = 30  # 30 days

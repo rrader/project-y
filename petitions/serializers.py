@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 from petitions.utils import generate_unique_upload_filename
 from rest_framework import serializers
-from petitions.models import Petition, Media, PetitionSign, Tag
+from petitions.models import Petition, Media, PetitionSign, Tag, PetitionStatusChange
 from rest_framework.fields import empty
 from rest_framework.reverse import reverse
 from django.core.exceptions import ObjectDoesNotExist
@@ -32,6 +32,12 @@ class PetitionSignSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['petition', 'comment', 'anonymous', 'author']
 
 
+class PetitionStatusChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PetitionStatusChange
+        fields = ['status', 'timestamp', 'comment']
+
+
 class PetitionSerializer(serializers.HyperlinkedModelSerializer):
     signs = serializers.SerializerMethodField()
 
@@ -41,11 +47,13 @@ class PetitionSerializer(serializers.HyperlinkedModelSerializer):
             raise serializers.ValidationError("Request is not in context of serializer")
         return request.build_absolute_uri(reverse('petitionsign-list') + '?petition=' + str(obj.id))
 
-    status = serializers.ReadOnlyField()
+    status = serializers.ReadOnlyField(source='current_status.status')
+    status_log = PetitionStatusChangeSerializer(many=True, read_only=True)
     sign_count = serializers.ReadOnlyField(source='signs.count')
     class Meta:
         model = Petition
-        fields = ('url', 'title', 'text', 'deadline', 'responsible', 'signs', 'status', 'sign_count')
+        fields = ('url', 'title', 'text', 'deadline', 'responsible',
+                  'signs', 'status', 'status_log', 'sign_count')
 
 
 class UserSerializerDetail(UserSerializer):

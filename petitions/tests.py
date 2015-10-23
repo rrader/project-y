@@ -3,11 +3,12 @@ import logging
 import unittest
 import sys
 from django.contrib.auth import get_user_model
-from petitions.models import Petition, Media, PetitionSign, Tag
+from petitions.models import Petition, Media, PetitionSign, Tag, PetitionStatusChange
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 from django.conf import settings
+import petitions.workflow
 
 
 logger = logging.getLogger(__name__)
@@ -321,7 +322,15 @@ class TestPetitionSignResource(unittest.TestCase):
     def test_petition_status_updating_if_signs_goal_reached(self):
         PetitionSign.objects.all().delete()
         petition = self.get_petition()
-        self.assertEqual(petition.status, "V")
+        self.assertEqual(petition.current_status().status, Petition.CREATED)
+
+        # activate
+        self.client.force_authenticate(self.get_staff_user())
+        response = self.client.get(reverse("petition-to-moderation", args=(petition.id,)))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response = self.client.get(reverse("petition-to-active", args=(petition.id,)))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
         users = self.get_users()
         sign = self.set_sign_content()
         for user in users:
@@ -329,11 +338,11 @@ class TestPetitionSignResource(unittest.TestCase):
             self.client.force_authenticate(user)
             response = self.client.post(reverse("petitionsign-list"), data=sign, format="json")
             self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        
+
         signs = PetitionSign.objects.filter(petition=petition)
         self.assertEqual(len(users), len(signs))
         petition.refresh_from_db()
-        self.assertEqual(petition.status, "A")
+        self.assertEqual(petition.current_status().status, Petition.EXECUTION)
 
     # setting sign content. method was created to keep the code DRY
     @classmethod
@@ -342,11 +351,12 @@ class TestPetitionSignResource(unittest.TestCase):
         petition_url = "http://testhost" + reverse('petition-detail', args=[petition.id])
         sign = PETITION_SIGN.copy()
         sign.update({"petition": petition_url})
-        return sign    
+        return sign
 
     @classmethod
     def get_users(cls):
         # we should create as many users, as we need do reach goal of signs
+        settings.SIGNS_GOAL = 2
         num = settings.SIGNS_GOAL
         if not hasattr(cls, "_users"):
             cls._users = []
@@ -355,6 +365,13 @@ class TestPetitionSignResource(unittest.TestCase):
                 cls._users.append(get_user_model()(username=username + str(i)))
                 cls._users[i].save()   
         return cls._users
+
+    @classmethod
+    def get_staff_user(cls):
+        if not hasattr(cls, "_staffuser"):
+            cls._staffuser = get_user_model()(username="Azathoth", is_staff=True)
+            cls._staffuser.save()
+        return cls._staffuser
 
     @classmethod
     def get_petition(cls):
