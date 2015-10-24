@@ -4,6 +4,7 @@
       <title>kpi-retitions</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="css/slicknav.css">
       <link rel="stylesheet" href="css/style.css">
       <link rel="stylesheet" href="css/search-icon.css">
       <link rel="stylesheet" href="css/progressbar.css">
@@ -12,6 +13,7 @@
       <link rel="stylesheet" href="css/responsive-menu.css">
       <link rel="stylesheet" href="css/navicon.css">
       <link rel="stylesheet" href="css/eric-meyer-reset.css">
+      <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
       <!-- Fonts -->
       <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300' rel='stylesheet' type='text/css'>
       <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,600&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
@@ -61,14 +63,27 @@
                         </nav>
                   </div>
                   <!-- responsive menu icon -->
-                  <div class="responsive-menu">
+                  <div class="responsive-menu"><!--
                         <div class="to-close">
                               <div class="x">
                                     <input type="checkbox" id="menu-x" />
                                     <label for="menu-x"><span></span></label>
                               </div>
-                        </div>
-                        <div class="dropdown" id="dropdown"></div>
+                        </div>-->
+                        <ul id="menu">
+                              <a href="#" class="active">
+                                    <li>Активні петиції</li>
+                              </a>
+                              <a href="#" class="new">
+                                    <li>Нові петиції</li>
+                              </a>
+                              <a href="#" class="archive">
+                                    <li>Архів петицій</li>
+                              </a>
+                              <a href="#" class="menu-popular">
+                                    <li>Популярні петиції</li>
+                              </a>
+                        </ul>
                   </div>
             </div>
       </header>
@@ -615,5 +630,70 @@
       </footer>
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+      <script src="js/jquery.slicknav.js"></script>
+      <script type="text/javascript">
+      $(document).ready(function(){
+
+$('#menu').slicknav({
+
+// Label for menu button.
+// Use an empty string for no label.
+'label' : 'MENU',
+
+// If true, the mobile menu is a copy of the original.
+'duplicate': true,
+
+// The duration of the sliding animation.
+'duration': true,
+
+// Easing used for open animations.
+'easingOpen': 'swing',
+
+// Easing used for close animations.
+'easingClose': 'swing',
+
+// Element, jQuery object, or jQuery selector string to prepend the mobile menu to.
+'prependTo': 'body',
+
+// Element type for parent menu items.
+'parentTag': 'a',
+
+// Close menu when a link is clicked.
+'closeOnClick': false,
+
+// Allow clickable links as parent elements.
+allowParentLinks: false,
+
+// If false, parent links will be separated from the sub-menu toggle.
+nestedParentLinks: true,
+
+// Show children of parent links by default.
+showChildren: false,
+
+// Add branding to menu bar.
+brand: '',
+
+// Called after SlickNav creation
+init: function () {},
+
+// Called after menu or sub-menu opened.
+open: function () {},
+
+// Called after menu or sub-menu closed.
+close: function () {}
+
+});
+
+});
+// toggle the menu
+$('#menu').slicknav('toggle');
+
+// open the menu
+$('#menu').slicknav('open');
+
+// close the menu
+$('#menu').slicknav('close');
+
+      </script>
 </body>
 </html>

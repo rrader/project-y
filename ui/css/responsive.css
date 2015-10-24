@@ -18,7 +18,10 @@
       .left-buttons, .right-buttons{
             display:none;
       }
-      .responsive-menu{
+      header{
+            height:0;
+      }
+      .slicknav_menu{
             display:block;
       }
 }

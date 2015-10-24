@@ -31,10 +31,13 @@ button::-moz-focus-inner {
 /* header */
 header{
       height:65px;
+      width:100%;
       background:#fff;
 }
-.logo{
+.logo, .logo:hover, .logo:active, .logo:focus{
       float:left;
+      text-decoration:none;
+      outline:0;
       line-height:65px;
       margin-left:10px;
       font-size:20px;
@@ -106,6 +109,41 @@ header{
       height:65px;
       margin:30px 10px 0 0;
       padding-left:10px;
+}
+.slicknav_menu{
+      background:#fff;
+      width:100%;
+      height:65px;
+      display:none;
+}
+.slicknav_menu ul a, .slicknav ul li{
+      position:relative;
+      margin:0;
+      color:#009688;
+      background:#fff;
+      font-size:15px;
+      font-weight:bold;
+      height:80px;
+      width:100%;
+      line-height:80px;
+}
+.slicknav_menu ul a:hover, .slicknav_menu ul a:active, .slicknav_menu ul a:focus{
+      background:#fff;
+      color:#00baa8;
+      border-radius:0;
+      text-decoration:none;
+}
+.slicknav_menu ul a:first-child{
+      border-top:1px solid #eeeeee;
+}
+.slicknav_btn{
+      margin:10px 0;
+      padding-bottom:18px;
+      background:#fff;
+      float:left;
+}
+.slicknav_menu .slicknav_menutxt {
+    display: none;
 }
 /* main*/
 .create{
