@@ -8,7 +8,8 @@ var uglify = require('gulp-uglify');
 var exec = require('child_process').exec
 
 var path = {
-  static: ['ui/**/*.html'],
+  htmlStatic: ['ui/index.html'],
+  jsStatic: ['ui/js/jquery.slicknav.js'],
   jsMain: 'ui/js/app.js',
   jsFiles: ['ui/js/*.js', 'ui/js/**/*.js'],
   cssFiles: ['ui/css/*.css', 'ui/css/**/*.css'],
@@ -55,8 +56,10 @@ gulp.task('bundle-css-prod', function () {
 });
 
 gulp.task('copy-static', function (){
-  gulp.src(path.static)
+  gulp.src(path.htmlStatic)
     .pipe(gulp.dest(path.prod));
+  gulp.src(path.jsStatic)
+    .pipe(gulp.dest(path.prod + '/js'));
 });
 
 gulp.task('build', ['bundle-js-prod', 'bundle-css-prod', 'copy-static']);
