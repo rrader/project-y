@@ -1,13 +1,16 @@
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
-from petitions.serializers import UserSerializerDetail, PetitionSerializerDetail, ImageUploadSerializer, PetitionSignSerializer, TagSerializer
+from petitions.serializers import UserSerializerDetail, PetitionSerializerDetail, ImageUploadSerializer, PetitionSignSerializer, TagSerializer, TagSerializerDetail
 from petitions.models import Petition, PetitionSign, Tag
-from rest_framework import viewsets, permissions, status, filters
+import petitions.workflow
+from petitions.workflow import PetitionWorkflowMixin, check_conditions
+from rest_framework import permissions, status
 from petitions.permissions import IsAuthorOrReadOnly
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import list_route
 from rest_framework.response import Response
-from rest_framework import viewsets, generics
+from rest_framework import viewsets
 from allauth.socialaccount.providers.vk.views import VKOAuth2Adapter
 from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
 from rest_auth.registration.views import SocialLoginView
@@ -29,13 +32,19 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         return Response(serializer.data)
 
 
-class TagsList(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin,):
+class TagsViewSet(viewsets.GenericViewSet, viewsets.mixins.ListModelMixin,
+                    viewsets.mixins.RetrieveModelMixin):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = ()
 
+    def retrieve(self, request, pk=None):
+        tag = get_object_or_404(self.queryset, pk=pk)
+        serializer = TagSerializerDetail(tag, context={'request': request})
+        return Response(serializer.data)
 
-class PetitionViewSet(viewsets.ModelViewSet):
+
+class PetitionViewSet(PetitionWorkflowMixin, viewsets.ModelViewSet):
     queryset = Petition.objects.all().order_by('created_at')
     serializer_class = PetitionSerializerDetail
     permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
@@ -70,6 +79,4 @@ class PetitionSignViewSet(viewsets.mixins.CreateModelMixin,
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
         petition = serializer.validated_data["petition"]
-        if len(PetitionSign.objects.filter(petition=petition)) >= settings.SIGNS_GOAL:
-            petition.status = "A"
-            petition.save()
+        check_conditions(petition)

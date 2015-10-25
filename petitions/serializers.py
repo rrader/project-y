@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.core.files.storage import default_storage
 from petitions.utils import generate_unique_upload_filename
 from rest_framework import serializers
-from petitions.models import Petition, Media, PetitionSign, Tag
+from petitions.models import Petition, Media, PetitionSign, Tag, PetitionStatusChange
 from rest_framework.fields import empty
 from rest_framework.reverse import reverse
 from django.core.exceptions import ObjectDoesNotExist
@@ -19,9 +19,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'username')
 
 
-class TagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Tag
+
 
 
 class PetitionSignSerializer(serializers.HyperlinkedModelSerializer):
@@ -30,6 +28,12 @@ class PetitionSignSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PetitionSign
         fields = ['petition', 'comment', 'anonymous', 'author']
+
+
+class PetitionStatusChangeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PetitionStatusChange
+        fields = ['status', 'timestamp', 'comment']
 
 
 class PetitionSerializer(serializers.HyperlinkedModelSerializer):
@@ -41,11 +45,14 @@ class PetitionSerializer(serializers.HyperlinkedModelSerializer):
             raise serializers.ValidationError("Request is not in context of serializer")
         return request.build_absolute_uri(reverse('petitionsign-list') + '?petition=' + str(obj.id))
 
-    status = serializers.ReadOnlyField()
+    status = serializers.ReadOnlyField(source='current_status.status')
+    status_log = PetitionStatusChangeSerializer(many=True, read_only=True)
     sign_count = serializers.ReadOnlyField(source='signs.count')
+    deadline = serializers.ReadOnlyField()
     class Meta:
         model = Petition
-        fields = ('url', 'title', 'text', 'deadline', 'responsible', 'signs', 'status', 'sign_count')
+        fields = ('url', 'title', 'text', 'deadline', 'responsible',
+                  'signs', 'status', 'status_log', 'sign_count')
 
 
 class UserSerializerDetail(UserSerializer):
@@ -153,6 +160,19 @@ class PetitionSerializerDetail(PetitionSerializer):
             instance.save()
 
         return super().update(instance, validated_data)
+
+
+class TagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ('name',)
+
+
+class TagSerializerDetail(TagSerializer):
+    petition_set = PetitionSerializerDetail(many=True)
+
+    class Meta(TagSerializer.Meta):
+        fields = TagSerializer.Meta.fields + ('petition_set',)
 
 
 class ImageUploadSerializer(serializers.Serializer):
