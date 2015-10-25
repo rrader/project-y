@@ -232,7 +232,6 @@ header{
       height:250px;
 }
 .progress-bar{
-      position:absolute;
       margin-top:-250px;
       padding:0 auto;
       height:250px;
@@ -441,3 +440,5 @@ footer{
       text-align:center;
       font-size:10px;
 }
+
+/* changes */
