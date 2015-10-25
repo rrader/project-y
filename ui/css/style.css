@@ -123,9 +123,10 @@ header{
       background:#fff;
       font-size:15px;
       font-weight:bold;
-      height:80px;
+      height:60px;
       width:100%;
-      line-height:80px;
+      line-height:60px;
+      outline:0;
 }
 .slicknav_menu ul a:hover, .slicknav_menu ul a:active, .slicknav_menu ul a:focus{
       background:#fff;
@@ -133,7 +134,7 @@ header{
       border-radius:0;
       text-decoration:none;
 }
-.slicknav_menu ul a:first-child{
+.slicknav_menu ul a:first-child,.slicknav_menu ul a:nth-child(5){
       border-top:1px solid #eeeeee;
 }
 .slicknav_btn{
