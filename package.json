@@ -2,9 +2,14 @@
   "name": "project-y",
   "version": "1.0.0",
   "description": "KPI Petitions",
-  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-js": "watchify ui/js/app.js -t babelify -o ui/js/bundle.js",
+    "watch-css": "gulp watch-css",
+    "bundle-js": "gulp bundle-js",
+    "bundle-css": "gulp bundle-css",
+    "bundle-prod": "gulp production",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
@@ -17,10 +22,17 @@
   },
   "homepage": "https://github.com/kpi-petitions/project-y#readme",
   "devDependencies": {
+    "babel-eslint": "^4.1.3",
+    "babelify": "^6.4.0",
+    "browserify": "^11.2.0",
+    "eslint": "^1.7.3",
+    "eslint-config-airbnb": "^0.1.0",
+    "eslint-plugin-react": "^3.6.3",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
-    "gulp-html-replace": "^1.5.4",
-    "gulp-react": "^3.0.1",
-    "gulp-uglify": "^1.4.1"
+    "gulp-uglify": "^1.4.1",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.4.0"
   }
 }
