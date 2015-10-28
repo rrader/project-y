@@ -3,7 +3,7 @@ containers:
     setup:
     - !Ubuntu trusty
     - !UbuntuUniverse
-    - !Install [libpq-dev, ca-certificates, libjpeg-dev, strace]
+    - !Install [libpq-dev, ca-certificates, libjpeg-dev]
     - !Py3Requirements requirements.txt
     - !NpmInstall [gulp]
 
