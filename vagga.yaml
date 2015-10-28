@@ -3,12 +3,15 @@ containers:
     setup:
     - !Ubuntu trusty
     - !UbuntuUniverse
-    - !Install [libpq-dev, ca-certificates, libjpeg-dev]
+    - !Install [libpq-dev, ca-certificates, libjpeg-dev, npm]
     - !Py3Requirements requirements.txt
     - !NpmInstall [gulp]
 
+    volumes:
+      /tmp: !Tmpfs {size: 200Mi}
 commands:
   run: !Command
     container: projecty
     run: |
+        npm install
         gulp
