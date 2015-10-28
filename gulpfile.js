@@ -77,10 +77,10 @@ gulp.task('watch', function () {
 // Python tasks
 
 gulp.task('serve', function() {
-  proc = exec('source venv/bin/activate;' +
-    'PYTHONUNBUFFERED=1 ./manage.py collectstatic --noinput;' +
-    'PYTHONUNBUFFERED=1 ./manage.py migrate --noinput;' +
-    'PYTHONUNBUFFERED=1 ./manage.py runserver');
+  proc = exec(
+    'PYTHONUNBUFFERED=1 python3 ./manage.py collectstatic --noinput;' +
+    'PYTHONUNBUFFERED=1 python3 ./manage.py migrate --noinput;' +
+    'PYTHONUNBUFFERED=1 python3 ./manage.py runserver');
   proc.stderr.on('data', function(data) {
     process.stdout.write(data);
   });
