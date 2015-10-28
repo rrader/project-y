@@ -67,3 +67,5 @@ ui-dist
 node_modules
 
 staticfiles
+
+.vagga

@@ -1,0 +1,14 @@
+containers:
+  projecty:
+    setup:
+    - !Ubuntu trusty
+    - !UbuntuUniverse
+    - !Install [libpq-dev, ca-certificates, libjpeg-dev]
+    - !Py3Requirements requirements.txt
+    - !NpmInstall [gulp]
+
+commands:
+  run: !Command
+    container: projecty
+    run: |
+        gulp
