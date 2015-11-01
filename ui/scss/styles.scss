@@ -1,5 +1,8 @@
 @import 'mixins/header-item';
 @import 'mixins/button-big';
+@import 'mixins/background-image';
+@import 'mixins/color-filter';
+@import 'mixins/square';
 
 @import 'helpers/variables';
 @import 'helpers/helpers';
@@ -13,3 +16,5 @@
 @import 'components/aside-block';
 @import 'components/tag';
 @import 'components/social';
+@import 'components/petition';
+@import 'components/bottom';

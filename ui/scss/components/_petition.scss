@@ -1,0 +1,143 @@
+.petition {
+  background-color: #fff;
+}
+
+.petition--small {
+  height: $petition-small-height;
+  margin-bottom: 32px;
+}
+
+.petition__logo {
+  @include background-image($jumbotron-bg, center center);
+}
+
+.petition__logo--small {
+  @include square($petition-small-logo-size);
+  @include color-filter(#000, $petition-small-logo-opacity);
+
+  float: left;
+
+  &:before {
+    transition: opacity .25s;
+  }
+
+  &:hover {
+    &:before {
+      opacity: $petition-small-logo-opacity-hover;
+    }
+  }
+}
+
+.petition__content {
+  padding: 20px;
+}
+
+.petition__content--small {
+  float: left;
+
+  width: $petition-list-width - $petition-small-logo-size - 40px;
+}
+
+.petition__title {
+  font-family: 'LatoBold', sans-serif;
+  font-size: 18px;
+
+  text-decoration: none;
+
+  color: $petition-title-color;
+
+  transition: color 0.25s;
+
+  &:hover {
+    color: $base-color;
+  }
+}
+
+.petition__author {
+  font-family: 'LatoRegular', sans-serif;
+  font-size: 14px;
+
+  color: $petition-author-color;
+}
+
+.petition__author--small {
+  margin-top: 4px;
+}
+
+.petition__description {
+  font-family: 'LatoRegular', sans-serif;
+  font-size: 14px;
+
+  text-align: justify;
+
+  color: $petition-description-color;
+}
+
+.petition__description--small {
+  margin-top: 12px;
+}
+
+.petition__tags {
+  border-bottom: 1px solid $petition-small-underline;
+}
+
+.petition__tags--small {
+  margin-top: 16px;
+  padding-bottom: 15px;
+}
+
+.petition__additional--small {
+  margin-top: 10px;
+}
+
+.petition__date {
+  font-family: 'LatoRegular', sans-serif;
+
+  color: $petition-date-color;
+}
+
+.petition__date--small {
+  font-size: 12px;
+}
+
+.petition__actions {
+  //Some base for actions...
+}
+
+.petition__actions--small {
+  float: right;
+}
+
+.petition__action {
+  display: inline-block;
+  color: $petition-action-color;
+  text-decoration: none;
+
+  &:hover {
+    color: $base-color;
+  }
+}
+
+.petition__action--small {
+  margin-left: 24px;
+  height: $petition-small-action-height;
+}
+
+.petition__action-icon {
+  transition: color 1s;
+}
+
+.petition__action-icon--small {
+  font-size: 14px;
+  margin-right: 2px;
+}
+
+.petition__action-name {
+  font-family: 'LatoRegular', sans-serif;
+  font-size: 12px;
+  transition: color .25s;
+}
+
+.petition__action-name--small {
+  line-height: $petition-small-action-height;
+}

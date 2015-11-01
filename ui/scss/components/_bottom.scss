@@ -1,0 +1,20 @@
+.bottom {
+  width: 204px;
+  margin: 32px auto;
+
+  text-align: center;
+}
+
+.bottom__more {
+  @include button-big(200px);
+}
+
+.bottom__up {
+  font-size: 30px;
+
+  margin: 32px 0 48px;
+
+  text-decoration: none;
+
+  color: $base-color;
+}
