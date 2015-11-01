@@ -9,6 +9,8 @@
 
 .petition__logo {
   @include background-image($jumbotron-bg, center center);
+
+  display: table;
 }
 
 .petition__logo--small {

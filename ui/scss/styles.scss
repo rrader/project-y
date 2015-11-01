@@ -3,6 +3,7 @@
 @import 'mixins/background-image';
 @import 'mixins/color-filter';
 @import 'mixins/square';
+@import 'mixins/progress-bar';
 
 @import 'helpers/variables';
 @import 'helpers/helpers';
@@ -18,3 +19,4 @@
 @import 'components/social';
 @import 'components/petition';
 @import 'components/bottom';
+@import 'components/progress-bar';

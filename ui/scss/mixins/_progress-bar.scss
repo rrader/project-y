@@ -1,0 +1,13 @@
+@mixin progress-bar($progress, $bar-color, $back-color) {
+  $loops: 100;
+  $increment: 360 / $loops;
+  $half: 50;
+  @if $progress < $half {
+    $value: 90deg + ($increment * $progress);
+    background-image: linear-gradient(90deg, $back-color 50%, transparent 50%, transparent), linear-gradient($value, $bar-color 50%, $back-color 50%, $back-color);
+  }
+  @else {
+    $value: -90deg + ($increment * ($progress - $half));
+    background-image: linear-gradient($value, $bar-color 50%, transparent 50%, transparent), linear-gradient(270deg, $bar-color 50%, $back-color 50%, $back-color);
+  }
+}
