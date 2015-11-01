@@ -1,0 +1,23 @@
+@mixin button-big($width) {
+  font-family: 'LatoRegular', sans-serif;
+  font-size: 14px;
+  line-height: $button-big-height;
+
+  display: inline-block;
+
+  width: $width;
+  height: $button-big-height;
+
+  transition: color .25s, background-color .25s;
+  text-align: center;
+  text-decoration: none;
+
+  color: $base-color;
+  border: 2px solid $base-color;
+  border-radius: $button-big-radius;
+
+  &:hover {
+    color: #fff;
+    background-color: $base-color;
+  }
+}

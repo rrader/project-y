@@ -1,7 +1,12 @@
+@import 'mixins/header-item';
+@import 'mixins/button-big';
+
+@import 'helpers/variables';
+@import 'helpers/helpers';
+
 @import 'base/reset';
 @import 'base/fonts';
-@import 'base/variables';
-@import 'base/globals';
 
 @import 'components/containers';
 @import 'components/header';
+@import 'components/jumbotron';
