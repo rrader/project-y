@@ -61,8 +61,8 @@ venv
 *.sqlite3
 media
 
-ui/css/bundle.css
-ui/js/bundle.js
+.sass-cache
+ui/css
 ui-dist
 node_modules
 

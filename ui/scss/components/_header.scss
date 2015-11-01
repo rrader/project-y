@@ -1,0 +1,56 @@
+.header {
+  line-height: $header-height;
+
+  width: 100%;
+  height: $header-height;
+
+  background-color: $header-bg;
+}
+
+.header__logo {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+
+  margin-right: 32px;
+
+  text-decoration: none;
+
+  color: $base-color;
+}
+
+.header__nav-item {
+  font-family: 'LatoBold', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+
+  display: inline-block;
+
+  height: $header-height;
+  margin-right: 32px;
+
+  transition: color .25s;
+  text-decoration: none;
+
+  color: $header-nav-item-color;
+
+  &:hover {
+    color: $base-color;
+  }
+}
+
+.header__nav-item--active {
+  height: $header-height - $header-nav-item-underline;
+
+  color: $base-color;
+  border-bottom: $header-nav-item-underline solid $base-color;
+
+  @extend .header__nav-item;
+}
+
+.header__auth-item {
+  margin-right: 0;
+  margin-left: 32px;
+
+  @extend .header__nav-item;
+}
