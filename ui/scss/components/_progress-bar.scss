@@ -40,3 +40,37 @@
     @include progress-bar($i, $base-color, #2f3439);
   }
 }
+
+.progress-bar__mini {
+  display: inline-block;
+
+  width: $progress-bar-mini-size;
+  height: $progress-bar-mini-size;
+
+  border-radius: 50%;
+}
+
+.progress-bar__mini-inner {
+  font-family: 'LatoBold', sans-serif;
+  font-size: 14px;
+  line-height: $progress-bar-mini-inner-size;
+
+  position: absolute;
+  top: 2px;
+  left: 2px;
+
+  width: $progress-bar-mini-inner-size;
+  height: $progress-bar-mini-inner-size;
+
+  text-align: center;
+
+  color: $progress-bar-mini-color;
+  border-radius: 50%;
+  background-color: $progress-bar-mini-inner-bg;
+}
+
+@for $i from 0 through 100 {
+  .progress-bar__mini--#{$i} {
+    @include progress-bar($i, $base-color, $progress-bar-mini-bg);
+  }
+}

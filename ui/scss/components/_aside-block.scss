@@ -42,3 +42,58 @@
     }
   }
 }
+
+.aside-block__petition {
+  display: block;
+
+  width: 100%;
+  height: $aside-block-petition-height;
+  margin-top: 12px;
+
+  text-decoration: none;
+
+  border-bottom: 1px solid $aside-block-petition-underline;
+
+  &:hover {
+    .aside-block__petition-title {
+      color: $base-color;
+    }
+  }
+}
+
+.aside-block__petition:last-child {
+  border-bottom: none;
+}
+
+.aside-block__petition-number {
+  position: relative;
+
+  display: table;
+  float: left;
+
+  width: $progress-bar-mini-size;
+  height: $progress-bar-mini-size;
+  margin-right: 12px;
+}
+
+.aside-block__petition-content {
+  float: left;
+
+  margin-top: 6px;
+}
+
+.aside-block__petition-title {
+  font-family: 'LatoBold', sans-serif;
+  font-size: 14px;
+
+  transition: color .25s;
+
+  color: $aside-block-petition-title-color;
+}
+
+.aside-block__petition-author {
+  font-family: 'LatoRegular', sans-serif;
+  font-size: 12px;
+
+  color: $aside-block-petition-author-color;
+}
