@@ -1,0 +1,27 @@
+.tag {
+  font-family: 'LatoRegular', sans-serif;
+  font-size: 12px;
+  line-height: $tag-height;
+
+  display: inline-block;
+
+  height: $tag-height;
+  padding: 0 16px;
+
+  transition: background-color .25s;
+  text-align: center;
+  text-decoration: none;
+
+  color: $tag-color;
+  border-radius: $tag-height / 2;
+  background-color: $tag-bg;
+
+  &:hover {
+    background-color: $tag-bg-hover;
+  }
+}
+
+.tag--popular {
+  margin-right: 6px;
+  margin-bottom: 8px;
+}

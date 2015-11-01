@@ -1,0 +1,35 @@
+.social {
+  font-size: 14px;
+  line-height: $social-size;
+
+  display: inline-block;
+
+  width: $social-size;
+  height: $social-size;
+
+  text-align: center;
+  text-decoration: none;
+
+  color: #fff;
+  border-radius: $social-size / 2;
+}
+
+.social--facebook {
+  background-color: $social-facebook-bg;
+}
+
+.social--vk {
+  background-color: $social-vk-bg;
+}
+
+.social--twitter {
+  background-color: $social-twitter-bg;
+}
+
+.social--google-plus {
+  background-color: $social-goolge-plus-bg;
+}
+
+.social--aside {
+  margin-right: 8px;
+}

@@ -2,3 +2,21 @@
   width: $container-width;
   margin: auto;
 }
+
+.container--main {
+  overflow: hidden;
+
+  margin: 32px auto;
+}
+
+.petition-list {
+  float: left;
+
+  width: $petition-list-width;
+}
+
+.aside {
+  float: right;
+
+  width: $aside-width;
+}

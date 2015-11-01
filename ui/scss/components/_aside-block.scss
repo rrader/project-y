@@ -1,0 +1,44 @@
+.aside-block {
+  margin-bottom: 32px;
+  padding: 20px;
+
+  background-color: #fff;
+}
+
+.aside-block__title {
+  font-family: 'LatoBold', sans-serif;
+  font-size: 18px;
+
+  color: $aside-block-title-color;
+}
+
+.aside-block__title--secondary {
+  margin-top: 20px;
+}
+
+.aside-block__content {
+  margin-top: 14px;
+}
+
+.aside-block__text {
+  font-family: 'LatoRegular', sans-serif;
+  font-size: 14px;
+
+  text-align: justify;
+
+  color: $aside-block-text-color;
+}
+
+.aside-block__link {
+  margin-bottom: 8px;
+
+  a {
+    text-decoration: none;
+
+    @extend .aside-block__text;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
