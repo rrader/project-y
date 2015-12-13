@@ -29,6 +29,7 @@ class TestPetitionsResource(unittest.TestCase):
         self.client = APIClient()
 
     def test_list(self):
+        raise Exception()
         petition = Petition(author=self.get_user(), **PETITION)
         petition.save()
 
